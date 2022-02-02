@@ -12,8 +12,10 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DeleteMember from "./deleteMember";
 import ContactDetail from "./contactDetail";
+import { useAlert } from "react-alert";
 
 function Dashboard() {
+  const alert = useAlert();
   const [memberList, setMemberList] = useState([]);
   const [loadingList, setLoadingList] = useState(true);
   const [deleteID, setDeleteID] = useState("");
@@ -23,7 +25,7 @@ function Dashboard() {
   const [open, setOpen] = useState(false);
   const [show2, setShow2] = useState(false);
   const [id, setId] = useState();
-  const [contactDetailObj,setContactDetail] =useState({})
+  const [contactDetailObj, setContactDetail] = useState({});
   const [member_id, setMemberID] = useState();
   const member_url = `${webapibaseurl}/member`;
   const closeModal = (event) => {
@@ -45,13 +47,12 @@ function Dashboard() {
   };
   const handleClose2 = () => setShow2(false);
   const handleCloseContact = (event, data) => setShowContact(false);
-
+  const deleteAlert = () => alert.success("Record Deleted Successfully");
   useEffect(() => {
     axios.get(member_url).then((response) => {
       setMemberList(response.data);
       setLoadingList(false);
     });
-    
   }, []);
 
   const list = memberList.map((p, index) => {
@@ -85,8 +86,14 @@ function Dashboard() {
   return (
     <Layout>
       <div className="row ">
-        <div style={{backgroundColor:"#ffffff", width:"98%", marginLeft:10, marginBottom:6}}>
-       
+        <div
+          style={{
+            backgroundColor: "#ffffff",
+            width: "98%",
+            marginLeft: 10,
+            marginBottom: 6,
+          }}
+        >
           <button
             style={{ margin: 10 }}
             className="btn btn-primary btn-sm"
@@ -99,13 +106,19 @@ function Dashboard() {
         </div>
         <div style={{ float: "right", marginLeft: "auto" }}></div>
       </div>
-      <DeleteMember open={open} closeModal={closeModal} id={deleteID} />
+      <DeleteMember
+        open={open}
+        closeModal={closeModal}
+        id={deleteID}
+        deleteAlert={deleteAlert}
+      />
       <Members show={show} handleClose={handleClose} />
       <Contact show={show2} handleClose2={handleClose2} member_id={member_id} />
       <ContactDetail
         showContact={showContact}
         handleCloseContact={handleCloseContact}
-        contactDetailObj={contactDetailObj} />
+        contactDetailObj={contactDetailObj}
+      />
 
       <MaterialTable
         title="Members List"
@@ -127,12 +140,12 @@ function Dashboard() {
                 color="danger"
                 className="btn-outline-primary btn btn-sm "
                 onClick={() => {
-                  const contact_uri=`${webapibaseurl}/contact/${rowData.id}/`
-                  axios.get(contact_uri).then((res)=>{
-                   
-                    setContactDetail(res.data[0])})
-                  setShowContact(true)
-                  }}
+                  const contact_uri = `${webapibaseurl}/contact/${rowData.id}/`;
+                  axios.get(contact_uri).then((res) => {
+                    setContactDetail(res.data[0]);
+                  });
+                  setShowContact(true);
+                }}
               >
                 Detail
               </button>
@@ -172,7 +185,6 @@ function Dashboard() {
                     openModal();
                     setShowDelete(true);
                     setDeleteID(rowData.id);
-                   
                   }}
                 >
                   <DeleteForeverIcon />

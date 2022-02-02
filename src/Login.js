@@ -79,7 +79,7 @@ export default function Login() {
     <div className="wrapper">
       <form className="login full-height" onSubmit={formik.handleSubmit}>
         <p className="title">Log in</p>
-        <input type="text" placeholder="Username" autoFocus  {...formik.getFieldProps("username")}/>
+        <input type="text" placeholder="Username"   {...formik.getFieldProps("username")}/>
         {formik.touched.username && formik.errors.username ? (
               <div className="fv-plugins-message-container">
                 <div className="fv-help-block" style={{ color: "red" }}>

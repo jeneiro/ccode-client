@@ -20,8 +20,8 @@ export default function Layout(props) {
       <div className="wrapper-nav">
         {/* <!-- Sidebar  --> */}
         <nav id="sidebar">
-            <div className="sidebar-header">
-                <h6>Bootstrap Sidebar</h6>
+            <div className="sidebar-header" style={{textAlign:"center"}} >
+                <h6>CCODE PORTAL</h6>
             </div>
 
             {/* <ul className="list-unstyled components">

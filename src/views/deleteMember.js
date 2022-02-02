@@ -6,8 +6,8 @@ import Fade from "@mui/material/Fade";
 import {Button} from 'reactstrap';
 import { webapibaseurl } from "../environment";
 import axios from 'axios';
-
 function DeleteMember (props) {
+  
     const delete_url = `${webapibaseurl}/member/${props.id}/`;
     const style = {
         position: "absolute",
@@ -24,9 +24,15 @@ function DeleteMember (props) {
        
     props.closeModal(event)
     }
+    function deleteAlert(){
+      props.deleteAlert()
+    }
 function deleteItem(event){
-    axios.delete(delete_url).then(
-        closeModal
+    axios.delete(delete_url).then(()=>{
+      deleteAlert()
+        closeModal()
+    }
+
     )
 }
     
