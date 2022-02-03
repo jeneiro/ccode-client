@@ -47,7 +47,7 @@ function Dashboard() {
   };
   const handleClose2 = () => setShow2(false);
   const handleCloseContact = (event, data) => setShowContact(false);
-  const deleteAlert = () => alert.success("Record Deleted Successfully");
+  const AlertFunc = (event, alertMsg) => alert.success(alertMsg);
   useEffect(() => {
     axios.get(member_url).then((response) => {
       setMemberList(response.data);
@@ -64,6 +64,7 @@ function Dashboard() {
         middlename: p.middlename,
         lastname: p.lastname,
         gender: p.gender,
+        occupation: p.occupation,
         dob: moment(p.dob).format("ll"),
         wedding_annivasery: "Not Applicable",
       };
@@ -110,10 +111,10 @@ function Dashboard() {
         open={open}
         closeModal={closeModal}
         id={deleteID}
-        deleteAlert={deleteAlert}
+        AlertFunc={AlertFunc}
       />
-      <Members show={show} handleClose={handleClose} />
-      <Contact show={show2} handleClose2={handleClose2} member_id={member_id} />
+      <Members show={show} handleClose={handleClose}  AlertFunc={AlertFunc} />
+      <Contact show={show2} handleClose2={handleClose2} member_id={member_id}   AlertFunc={AlertFunc}/>
       <ContactDetail
         showContact={showContact}
         handleCloseContact={handleCloseContact}
@@ -123,16 +124,17 @@ function Dashboard() {
       <MaterialTable
         title="Members List"
         columns={[
-          { title: "S/N", field: "sn" },
-          { title: "First Name", field: "firstname" },
-          { title: "Last Name", field: "lastname" },
-          { title: "Other Name", field: "middlename" },
-          { title: "Gender", field: "gender" },
+          { title: "S/N", field: "sn",    },
+          { title: "First Name", field: "firstname",    },
+          { title: "Last Name", field: "lastname",    },
+          { title: "Other Name", field: "middlename",    },
+          { title: "Gender", field: "gender",   },
           { title: "DOB", field: "dob" },
-          { title: "Wedding Anniversary", field: "wedding_annivasery" },
-
+          { title: "Wedding Anniversary", field: "wedding_annivasery",    },
+          { title: "Occupation", field: "occupation",    },
           {
             field: "url",
+            
             title: "Contact Detail",
             tooltip: "View Contact Detail",
             render: (rowData) => (

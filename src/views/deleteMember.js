@@ -24,12 +24,13 @@ function DeleteMember (props) {
        
     props.closeModal(event)
     }
-    function deleteAlert(){
-      props.deleteAlert()
+    function AlertFunc(event){
+      let alertMsg = "Record Deleted";
+      props.AlertFunc(event, alertMsg)
     }
 function deleteItem(event){
     axios.delete(delete_url).then(()=>{
-      deleteAlert()
+      AlertFunc()
         closeModal()
     }
 

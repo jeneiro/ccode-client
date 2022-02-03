@@ -30,6 +30,10 @@ function Members(props) {
 
     setDob(newDate);
   };
+  function AlertFunc(event){
+    let alertMsg = "Member Created";
+    props.AlertFunc(event, alertMsg)
+  }
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
     let newDate = moment(date).format("L");
@@ -57,6 +61,7 @@ function Members(props) {
     lastname: "",
     middlename: "",
     gender: "",
+    occupation:"",
   };
 
   const formik = useFormik({
@@ -79,6 +84,7 @@ function Members(props) {
         axios.post(member_url, values).then((response) => {
           setErrorMessage(false);
           setErrorMessage2(false);
+          AlertFunc();
           handleClose();
         });
 
@@ -157,9 +163,25 @@ function Members(props) {
               {" "}
               *Please select a gender
             </div>
+            
           ) : (
             <></>
           )}
+          <label>Occupation</label>
+          <input
+            name="occupation"
+            placeholder="occupation"
+            className="form-control"
+            style={{ marginBottom: 20 }}
+            {...formik.getFieldProps("occupation")}
+          />
+           {formik.touched.occupation && formik.errors.occupation ? (
+            <div className="fv-plugins-message-container">
+              <div className="fv-help-block" style={{ color: "red" }}>
+                *{formik.errors.occupation}
+              </div>
+            </div>
+          ) : null}
           </div>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid>
@@ -174,7 +196,7 @@ function Members(props) {
               <DatePicker
                 openTo="year"
                 format="dd/MM/yyyy"
-                label="Date of birth"
+                label="Wedding Anniversary"
                 views={["year", "month", "date"]}
                 style={{ marginLeft: 20 }}
                 value={selectedDate2}

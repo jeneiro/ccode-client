@@ -9,7 +9,10 @@ import { Modal } from "react-bootstrap";
 function Contact(props) {
 
     const member_url = `${webapibaseurl}/contact`;
-
+    function AlertFunc(event){
+      let alertMsg = "Contact Created";
+      props.AlertFunc(event, alertMsg)
+    }
 
     function handleClose2(event) {
         
@@ -46,9 +49,9 @@ function Contact(props) {
           values.member_id = props.member_id
      
          axios.post(member_url, values).then(
-             (response)=>{
+             ()=>{
                handleClose2()
-                
+               AlertFunc() 
              }
          )
         },
